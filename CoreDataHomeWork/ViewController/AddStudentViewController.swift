@@ -12,10 +12,12 @@ import CoreData
 class AddStudentViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     var classCourse : ClassEntity?
+    var date: NSDate?
     
     @IBOutlet weak var studentName : UITextField!
     @IBOutlet weak var studentAddress : UITextField!
-    @IBOutlet weak var studentDate : UIDatePicker!
+    //@IBOutlet weak var studentDate : UIDatePicker!
+    @IBOutlet weak var studentDate : UITextField!
     @IBOutlet weak var studentPictrure : UIImageView!
     @IBOutlet weak var addButton : UIButton!
     
@@ -53,9 +55,31 @@ class AddStudentViewController: UIViewController, UIImagePickerControllerDelegat
     }
     @IBAction func addStudent(_ sender: AnyObject) {
         if let picture = UIImageJPEGRepresentation(studentPictrure.image!, 1) as NSData? {
-        DataManager.share.createStundent(name: studentName.text!, address: studentAddress.text!, date: studentDate.date as NSDate,classCourse : classCourse!, pictrure: picture )
+        DataManager.share.createStundent(name: studentName.text!, address: studentAddress.text!, date: date!,classCourse : classCourse!, pictrure: picture )
         }
         addButton.isEnabled = false
+        
+        self.navigationController?.popViewController(animated: true)
+        
+    }
+
+    @IBAction func dateTextFieldEdit(_ sender: UITextField) {
+        var datePicker : UIDatePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "vi_VN")
+        datePicker.frame.size.height = 100
+        sender.inputView = datePicker
+        datePicker.addTarget(self, action: #selector(didChange(sender:)), for: .valueChanged)
+        
+
+    }
+        func didChange(sender: UIDatePicker) {
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .long
+        dateFormat.locale = Locale(identifier: "vi_VN")
+        date = sender.date as NSDate?
+        studentDate.text = dateFormat.string(from: sender.date)
+        
         
     }
     func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
@@ -71,15 +95,22 @@ class AddStudentViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
 
     }
-    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.studentDate {
+            self.studentDate.resignFirstResponder()
+        }
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField == self.studentName) {
             self.studentAddress.becomeFirstResponder()
         }
         if (textField == self.studentAddress) {
-            self.studentAddress.resignFirstResponder()
+            self.studentDate.becomeFirstResponder()
         }
-        return true
+                return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
    
 

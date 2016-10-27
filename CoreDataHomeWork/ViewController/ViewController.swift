@@ -36,8 +36,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if classCourses?.count != 0 {
             classTableView.separatorStyle = .singleLine
         }
-        
-
         classTableView.reloadData()
     }
     func didTapAddButton(sender: AnyObject) {
@@ -72,9 +70,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             DataManager.share.deleteClass(classCourse: (classCourses?[indexPath.row])!)
             classCourses = DataManager.share.listClassCourse()
-            if classCourses?.count == 0 {
-                classTableView.separatorStyle = .none
-            }
             classTableView.reloadData()
             
         }

@@ -31,6 +31,8 @@ class AddClassViewController: UIViewController {
         
         DataManager.share.creatNewClass(name: addClassField.text!)
         addButton.isEnabled = false
+        self.navigationController?.popViewController(animated: true)
+
     }
     
     
