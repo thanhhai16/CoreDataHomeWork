@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ClassEntity" representedClassName=".ClassEntity" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="student" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudentEntity" inverseName="classCourse" inverseEntity="StudentEntity" syncable="YES"/>
+    </entity>
+    <entity name="StudentEntity" representedClassName=".StudentEntity" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="classCourse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ClassEntity" inverseName="student" inverseEntity="ClassEntity" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ClassEntity" positionX="-45" positionY="0" width="128" height="88"/>
+        <element name="StudentEntity" positionX="306" positionY="-39" width="128" height="118"/>
+    </elements>
+</model>
